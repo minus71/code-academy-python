@@ -28,4 +28,5 @@ class Matrix():
             if row < self.rows and row >0:
                 return self.__matrix[row][col]
         
-            
+    def array(self):
+        return self.__matrix[:]

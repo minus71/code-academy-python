@@ -35,7 +35,10 @@ class Test(unittest.TestCase):
         item = matrix.get(5,5)
         self.assertIsNone(item)
 
-
+    def testGetArray(self):
+        matrix = Matrix(3,2)
+        my_array = matrix.array()
+        self.assertIsNotNone(my_array)
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testMatrixConstructor']
