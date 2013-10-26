@@ -16,3 +16,16 @@ class Matrix():
         '''
         self.rows=rows
         self.cols=cols
+        self.__matrix = [[None]*cols for _ in range(rows)]
+    
+    def set(self,item,row,col):
+        if col < self.cols and col>0:
+            if row < self.rows and row >0:
+                self.__matrix[row][col]=item
+
+    def get(self,row,col):
+        if col < self.cols and col>0:
+            if row < self.rows and row >0:
+                return self.__matrix[row][col]
+        
+            
