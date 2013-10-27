@@ -81,7 +81,7 @@ class Matrix():
     def traverse(self,handler_function):
         for ir in range(self.rows):
             for ic in range(self.cols):
-                value = self.__matrix[ir,ic]
+                value = self.__matrix[ir][ic]
                 result = handler_function(value,ir,ic)
                 if result:
                     self.__matrix[ir,ic]
@@ -113,7 +113,13 @@ class Matrix():
             outstr.append("".join(r)+"\n")
         return str(outstr)
                     
-    
+    def serialize(self):
+        serial_matrix = []
+        def serialize_function(value,ir,ic):
+            serial_matrix.append((value,ir,ic))
+        self.traverse(serialize_function)                     
+        return serial_matrix
+        
     
     
     

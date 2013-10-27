@@ -99,6 +99,15 @@ class Test(unittest.TestCase):
         """
         matrix1=Matrix(init_string=matrix1)
         self.assertEqual(str(matrix1),"12\n34\n")
+
+    def testSerialize(self):
+        matrix1 = """
+        12
+        34
+        """
+        matrix1=Matrix(init_string=matrix1)
+        
+        self.assertEqual(matrix1.serialize(),[('1',0,0),('2',0,1),('3',1,0),('4',1,1)])
         
         
         
