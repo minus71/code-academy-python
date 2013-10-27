@@ -143,6 +143,15 @@ class Test(unittest.TestCase):
         matrix.commit()
         self.assertEqual(str(matrix),"X2\n34\n")
         
+
+    def testConditionalSet(self):
+        matrix = Matrix(init_string=".X\n..\n")
+        fn_validator =  lambda old_v, v: True if old_v=='.' else False
+        matrix.serial_set([('*',0,0),['*',0,1]], fn_validator )
+        self.assertEqual(str(matrix),".X\n..\n")
+        matrix.serial_set([('*',0,0),['*',1,0]], fn_validator )
+        self.assertEqual(str(matrix),"*X\n*.\n")
+
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testMatrixConstructor']

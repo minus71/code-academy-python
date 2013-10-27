@@ -123,10 +123,17 @@ class Matrix():
         self.traverse(serialize_function)                     
         return serial_matrix
         
-    def serial_set(self,serial_data):
+    def serial_set(self,serial_data,validator=lambda old_val,new_val:True):
+        self.begin()
         for val,row,col in serial_data:
+            old_value=self.__matrix[row][col]
+            if not validator(old_value,val):
+                self.rollback()
+                return
             self.__matrix[row][col]=val
-    
+        self.commit()
+        
+        
     def begin(self):
         if(not self.__before_begin):
             self.__before_begin = deepcopy( self.__matrix)
