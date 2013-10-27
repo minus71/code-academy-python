@@ -14,6 +14,8 @@ class Board():
     '''
     OCEAN='~'
     SHIP='#'    
+    SHIP='*'    
+    MISS='X'    
     def __init__(self,rows=10,cols=10):
         '''
         Builds a new boad
@@ -26,18 +28,35 @@ class Board():
         self.cols=cols
         self.ships=[]
         self.hidden_ships=Set()
+        self.hit=Set()
+        self.miss=Set()
+        
     def dim(self):
         return self.rows,self.cols
     
-    def __repr__(self):
-        out_buffer=MutableString()
+    def print_board(self):
+        print self.as_string(show_ship=False)
+
+    def as_string(self,show_hit=True,show_ship=True,show_miss=True):
+        out_buffer = MutableString()
         for r in range(self.rows):
             for c in range(self.cols):
-                if (r,c) in self.hidden_ships:
+                coord = r, c
+                if coord in self.hit:
+                    out_buffer.append(Board.HIT)
+                elif coord in self.hidden_ships:
                     out_buffer.append(Board.SHIP)
+                elif coord in self.miss:
+                    out_buffer.append(Board.MISS)
                 else:
                     out_buffer.append(Board.OCEAN)
+            
             out_buffer.append('\n')
+        
+        return out_buffer
+
+    def __repr__(self):
+        out_buffer = self.as_string()
         return str(out_buffer)
 
     def add_ship(self, *ships):

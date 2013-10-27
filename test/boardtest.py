@@ -131,6 +131,7 @@ class Test(unittest.TestCase):
         self.assertEqual(14, num_ship_flag, "This board has not the right number of ships:\n%s"%(str(board)));
         
         
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
