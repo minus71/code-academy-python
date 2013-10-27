@@ -49,7 +49,7 @@ class Test(unittest.TestCase):
     
     def testShip(self):
         ship_txt = """
-        ####
+        ###*
         ##
         """
         ship = Ship(ship_txt)

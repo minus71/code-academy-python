@@ -10,7 +10,7 @@ class Board():
     A naval battle game board
     '''
     OCEAN='~'
-    
+    SHIP='#'    
     def __init__(self,rows=10,cols=10):
         '''
         Builds a new boad
@@ -44,12 +44,11 @@ class Ship():
         for row in lines:
             if not row.isspace() and not len(row)==0:
                 self.__matrix.append(row)
-                for i in range(len(row)):
+                for i in range(len(row)):                    
                     c=row[i]
                     if not c.isspace():
                         min_col=min(min_col,i)
                         max_col=max(max_col,i)
-
         self.rows = len(self.__matrix)
         self.cols = max_col+1 - min_col
         for i in range(len(self.__matrix)):
@@ -57,7 +56,11 @@ class Ship():
             char_array = []
             for j in range(min_col,max_col+1):
                 if len(str_row)>j:
-                    char_array.append(str_row[j])
+                    chr_val = str_row[j]
+                    if chr_val.isspace():   
+                        char_array.append(' ')
+                    else:
+                        char_array.append('#')
                 else:
                     char_array.append(' ')
             self.__matrix[i]=char_array
