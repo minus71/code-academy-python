@@ -62,7 +62,46 @@ class Test(unittest.TestCase):
         self.assertEqual(['3',' '], matrix.array()[1])
         self.assertEqual(['5','6'], matrix.array()[2])
         
+    def testRotateRight(self):
+        matrix1 = """
+        12
+        34
+        56"""
+        matrix2 = """
+        531
+        642
+        """
+        matrix1=Matrix(init_string=matrix1)
+        matrix2=Matrix(init_string=matrix2)
+        
+        rotated = matrix1.rotate_right()
+        self.assertEqual(str(matrix1),str(matrix2))
 
+    def testRotateLeft(self):
+        matrix1 = """
+        12
+        34
+        56"""
+        matrix2 = """
+        246
+        135
+        """
+        matrix1=Matrix(init_string=matrix1)
+        matrix2=Matrix(init_string=matrix2)
+        
+        rotated = matrix1.rotate_left()
+        self.assertEqual(str(matrix1),str(matrix2))
+    
+    def testRepr(self):
+        matrix1 = """
+        12
+        34
+        """
+        matrix1=Matrix(init_string=matrix1)
+        self.assertEqual(str(matrix1),"12\n34\n")
+        
+        
+        
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testMatrixConstructor']
     unittest.main()
