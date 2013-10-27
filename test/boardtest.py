@@ -84,6 +84,52 @@ class Test(unittest.TestCase):
         ship.rotate(2)
         ship_rotated = Ship(ship_rotated_txt)
         self.assertEqual(str(ship_rotated), str(ship),"Expected: \n%s\nActual:\n%s"%(ship_rotated,ship))
+     
+    def testAddShip(self):
+        ship_txt = """
+        ##
+        #
+        """
+        ship = Ship(ship_txt)
+        self.assertEqual([(0,0),(0,1),(1,0)], ship.as_list())
+        
+    def testRandomize(self):
+        board=Board()
+
+        ship_txt = """
+        ####
+        ##
+        """
+        ship = Ship(ship_txt)
+        board.add_ship(ship)
+
+        ship_txt = """
+        ###
+        """
+        ship = Ship(ship_txt)
+        board.add_ship(ship)
+        
+        ship_txt = """
+        ####
+        """
+        ship = Ship(ship_txt)
+
+        board.add_ship(ship)
+        ship_txt = """
+        #
+        """
+        ship = Ship(ship_txt)
+        board.add_ship(ship)
+        board.randomize_map()
+        
+        board_string = str(board)
+        
+        num_ship_flag=0
+        for c in board_string:
+            if c == Board.SHIP:
+                num_ship_flag+=1
+        self.assertEqual(14, num_ship_flag, "This board has not the right number of ships:\n%s"%(str(board)));
+        
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
