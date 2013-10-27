@@ -126,6 +126,23 @@ class Test(unittest.TestCase):
         matrix=Matrix(init_string=matrix)
         matrix.serial_set([('X',0,0),('Y',1,1)])
         self.assertEqual(str(matrix),"X2\n3Y\n")
+    
+    def testBeginRollback(self):
+        matrix = Matrix(init_string="12\n34\n")
+        matrix.begin()
+        matrix.set('X', 0,0)
+        self.assertEqual(str(matrix),"X2\n34\n")
+        matrix.rollback()
+        self.assertEqual(str(matrix),"12\n34\n")
+        
+    def testBeginCommit(self):
+        matrix = Matrix(init_string="12\n34\n")
+        matrix.begin()
+        matrix.set('X', 0,0)
+        self.assertEqual(str(matrix),"X2\n34\n")
+        matrix.commit()
+        self.assertEqual(str(matrix),"X2\n34\n")
+        
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testMatrixConstructor']

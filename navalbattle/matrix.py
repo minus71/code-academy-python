@@ -4,6 +4,7 @@ Created on 24/ott/2013
 @author: minus
 '''
 from UserString import MutableString
+from copy import copy, deepcopy
 
 class Matrix():
     '''
@@ -15,6 +16,7 @@ class Matrix():
         '''
         Builds a new matrix
         '''
+        self.__before_begin=None
         if rows :
             self.rows=rows
             self.cols=cols
@@ -47,8 +49,8 @@ class Matrix():
         
     
     def set(self,item,row,col):
-        if col < self.cols and col>0:
-            if row < self.rows and row >0:
+        if col < self.cols and col>=0:
+            if row < self.rows and row >=0:
                 self.__matrix[row][col]=item
 
     def get(self,row,col):
@@ -57,7 +59,7 @@ class Matrix():
                 return self.__matrix[row][col]
         
     def array(self):
-        return self.__matrix[:]
+        return self.__matrix
     
     def rotate_right(self):
         def clockwise (value,ir,ic,context):
@@ -125,4 +127,15 @@ class Matrix():
         for val,row,col in serial_data:
             self.__matrix[row][col]=val
     
+    def begin(self):
+        if(not self.__before_begin):
+            self.__before_begin = deepcopy( self.__matrix)
+        
+    def rollback(self):
+        if self.__before_begin:
+            self.__matrix=self.__before_begin
+            self.__before_begin=None
     
+    def commit(self):
+        if self.__before_begin:
+            self.__before_begin=None
