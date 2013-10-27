@@ -14,8 +14,9 @@ class Board():
     '''
     OCEAN='~'
     SHIP='#'    
-    SHIP='*'    
-    MISS='X'    
+    HIT='*'    
+    MISS='X'
+    OUT_OF_BOARD='0'    
     def __init__(self,rows=10,cols=10):
         '''
         Builds a new boad
@@ -37,20 +38,36 @@ class Board():
     def print_board(self):
         print self.as_string(show_ship=False)
 
+
+    def fire_result(self, r, c):
+        if r not in range(self.cols) or r not in range(self.rows):
+            return Board.OUT_OF_BOARD 
+        coord = r, c
+        if coord in self.hit:
+            result = Board.HIT
+        elif coord in self.hidden_ships:
+            result = Board.SHIP
+        elif coord in self.miss:
+            result = Board.MISS
+        else:
+            result = Board.OCEAN
+        return result
+
     def as_string(self,show_hit=True,show_ship=True,show_miss=True):
         out_buffer = MutableString()
         for r in range(self.rows):
             for c in range(self.cols):
                 coord = r, c
-                if coord in self.hit:
-                    out_buffer.append(Board.HIT)
-                elif coord in self.hidden_ships:
-                    out_buffer.append(Board.SHIP)
-                elif coord in self.miss:
-                    out_buffer.append(Board.MISS)
+                if coord in self.hit and show_hit:
+                    result = Board.HIT
+                elif coord in self.hidden_ships and show_ship:
+                    result = Board.SHIP
+                elif coord in self.miss and show_miss:
+                    result = Board.MISS
                 else:
-                    out_buffer.append(Board.OCEAN)
-            
+                    result = Board.OCEAN
+                
+                out_buffer.append(result)
             out_buffer.append('\n')
         
         return out_buffer
@@ -104,6 +121,25 @@ class Board():
                 if not unplaced:
                     self.hidden_ships=self.hidden_ships.union(new_set)
 
+    def fire(self,row,col):
+        result = self.fire_result(row, col)
+        if result in (Board.HIT,Board.MISS):
+            return 0,"Coordinates already hit."
+        elif result == Board.OUT_OF_BOARD:
+            return 0,"Try to hit the board!"
+        else:
+            coord = (row,col)
+            if coord in self.hidden_ships:
+                self.hit.add(coord)
+                return 1, "Hit!!!"
+            else:
+                self.miss.add(coord)
+                return 0, "Hit!!!"
+
+        
+            
+            
+        
 
 
 class Ship():

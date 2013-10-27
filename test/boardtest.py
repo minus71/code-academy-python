@@ -6,6 +6,7 @@ Created on 27/ott/2013
 import unittest
 from navalbattle.board import Board, Ship
 from UserString import MutableString
+from sets import Set
 
 
 class Test(unittest.TestCase):
@@ -129,6 +130,31 @@ class Test(unittest.TestCase):
             if c == Board.SHIP:
                 num_ship_flag+=1
         self.assertEqual(14, num_ship_flag, "This board has not the right number of ships:\n%s"%(str(board)));
+
+    def testFire(self):
+        board=Board()
+        ship_txt = """
+        ####
+        """
+        ship = Ship(ship_txt)
+
+        board.add_ship(ship)
+        ship_txt = """
+        #
+        """
+        ship = Ship(ship_txt)
+        board.add_ship(ship)
+        board.randomize_map()
+        
+        ship_locations = Set(board.hidden_ships)
+        r,c = ship_locations.pop()
+        points,message = board.fire(r,c)
+        self.assertEqual(points, 1)
+        
+        points,message = board.fire(r,c)
+        self.assertEqual(points, 0)
+        self.assertEquals("Coordinates already hit.", message)
+        print board.as_string(show_ship=False)
         
         
         
