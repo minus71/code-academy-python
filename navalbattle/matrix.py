@@ -120,6 +120,8 @@ class Matrix():
         self.traverse(serialize_function)                     
         return serial_matrix
         
-    
+    def serial_set(self,serial_data):
+        for val,row,col in serial_data:
+            self.__matrix[row][col]=val
     
     

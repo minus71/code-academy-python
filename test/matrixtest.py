@@ -109,7 +109,14 @@ class Test(unittest.TestCase):
         
         self.assertEqual(matrix1.serialize(),[('1',0,0),('2',0,1),('3',1,0),('4',1,1)])
         
-        
+    def testInsert(self):
+        matrix = """
+        12
+        34
+        """
+        matrix=Matrix(init_string=matrix)
+        matrix.serial_set([('X',0,0),('Y',1,1)])
+        self.assertEqual(str(matrix),"X2\n3Y\n")
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testMatrixConstructor']
