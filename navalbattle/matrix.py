@@ -113,10 +113,11 @@ class Matrix():
             outstr.append("".join(r)+"\n")
         return str(outstr)
                     
-    def serialize(self):
+    def serialize(self,filter=lambda value:True):
         serial_matrix = []
         def serialize_function(value,ir,ic):
-            serial_matrix.append((value,ir,ic))
+            if filter(value):
+                serial_matrix.append((value,ir,ic))
         self.traverse(serialize_function)                     
         return serial_matrix
         

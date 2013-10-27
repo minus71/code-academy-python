@@ -108,6 +108,15 @@ class Test(unittest.TestCase):
         matrix1=Matrix(init_string=matrix1)
         
         self.assertEqual(matrix1.serialize(),[('1',0,0),('2',0,1),('3',1,0),('4',1,1)])
+
+    def testSerializeWithFilter(self):
+        matrix1 = """
+        X2
+        3X
+        """
+        matrix1=Matrix(init_string=matrix1)
+        filter=lambda value: True if value=='X' else False
+        self.assertEqual(matrix1.serialize(filter),[('X',0,0),('X',1,1)])
         
     def testInsert(self):
         matrix = """
