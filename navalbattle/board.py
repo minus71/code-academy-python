@@ -282,6 +282,6 @@ class Game():
         self.scores[player]+=score
         print msg
         print "  current score: %d" %(self.scores[player])
-        self.board.print_board()
+        print "***********************************************"
         
         
