@@ -235,11 +235,11 @@ class Game():
         top_players=[] 
         for p in self.scores:
             score = self.scores[p]
-            if score>max_score:
-                top_players=[p]
-                max_score=score
             if score == max_score:
                 top_players.append(p)
+            elif score>max_score:
+                top_players=[p]
+                max_score=score
         
         if len(top_players)==1:
             print "Player %d wins!" % (top_players[0])
