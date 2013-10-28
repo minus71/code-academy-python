@@ -74,7 +74,7 @@ class Test(unittest.TestCase):
         matrix1=Matrix(init_string=matrix1)
         matrix2=Matrix(init_string=matrix2)
         
-        rotated = matrix1.rotate_right()
+        matrix1.rotate_right()
         self.assertEqual(str(matrix1),str(matrix2))
 
     def testRotateLeft(self):
@@ -89,7 +89,7 @@ class Test(unittest.TestCase):
         matrix1=Matrix(init_string=matrix1)
         matrix2=Matrix(init_string=matrix2)
         
-        rotated = matrix1.rotate_left()
+        matrix1.rotate_left()
         self.assertEqual(str(matrix1),str(matrix2))
     
     def testRepr(self):
@@ -115,8 +115,8 @@ class Test(unittest.TestCase):
         3X
         """
         matrix1=Matrix(init_string=matrix1)
-        filter=lambda value: True if value=='X' else False
-        self.assertEqual(matrix1.serialize(filter),[('X',0,0),('X',1,1)])
+        filter_fn=lambda value: True if value=='X' else False
+        self.assertEqual(matrix1.serialize(filter_fn),[('X',0,0),('X',1,1)])
         
     def testInsert(self):
         matrix = """

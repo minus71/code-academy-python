@@ -4,9 +4,9 @@ Created on 27/ott/2013
 @author: minus
 '''
 from UserString import MutableString
-from random import randint, randrange
+from random import randrange
 from sets import Set
-from logging import log, warn
+from logging import warn
 
 class Board():
     '''

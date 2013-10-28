@@ -44,7 +44,7 @@ class Test(unittest.TestCase):
         board=Board(10,12)
         ocean = '~'
         expected = MutableString()
-        for i in range(10):
+        for _ in range(10):
             expected.append(ocean*12)
             expected.append('\n')
         self.assertEqual(expected, str(board))
@@ -149,7 +149,7 @@ class Test(unittest.TestCase):
         
         ship_locations = Set(board.hidden_ships)
         r,c = ship_locations.pop()
-        points,message = board.fire(r,c)
+        points,_ = board.fire(r,c)
         self.assertEqual(points, 1)
         
         points,message = board.fire(r,c)
@@ -177,7 +177,7 @@ class Test(unittest.TestCase):
         for _ in range(20):
             r=randrange(board.rows)
             c=randrange(board.cols)
-            points,message = board.fire(r,c)
+            points,_ = board.fire(r,c)
             if (r,c) in ship_locations:
                 self.assertEqual(points, 1)
                 ship_locations.remove((r,c))

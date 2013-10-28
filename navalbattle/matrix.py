@@ -4,7 +4,7 @@ Created on 24/ott/2013
 @author: minus
 '''
 from UserString import MutableString
-from copy import copy, deepcopy
+from copy import deepcopy
 
 class Matrix():
     '''
@@ -65,7 +65,7 @@ class Matrix():
         def clockwise (value,ir,ic,context):
             matrix = context['matrix']
             rows = matrix.rows
-            cols = matrix.cols
+            
             return value, ic,(rows-1)-ir
         
         self.transform(clockwise)
@@ -73,7 +73,7 @@ class Matrix():
     def rotate_left(self):
         def clockwise (value,ir,ic,context):
             matrix = context['matrix']
-            rows = matrix.rows
+            
             cols = matrix.cols
             return value, (cols-1)-ic,ir
         self.transform(clockwise)
@@ -115,10 +115,10 @@ class Matrix():
             outstr.append("".join(r)+"\n")
         return str(outstr)
                     
-    def serialize(self,filter=lambda value:True):
+    def serialize(self,filter_fn=lambda value:True):
         serial_matrix = []
         def serialize_function(value,ir,ic):
-            if filter(value):
+            if filter_fn(value):
                 serial_matrix.append((value,ir,ic))
         self.traverse(serialize_function)                     
         return serial_matrix
