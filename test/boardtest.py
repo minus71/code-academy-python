@@ -7,6 +7,7 @@ import unittest
 from navalbattle.board import Board, Ship
 from UserString import MutableString
 from sets import Set
+from random import randrange
 
 
 class Test(unittest.TestCase):
@@ -155,6 +156,35 @@ class Test(unittest.TestCase):
         self.assertEqual(points, 0)
         self.assertEquals("Coordinates already hit.", message)
         print board.as_string(show_ship=False)
+        
+    def testRandomFire(self):
+        board=Board()
+        ship_txt = """
+        ####
+        """
+        ship = Ship(ship_txt)
+
+        board.add_ship(ship)
+        ship_txt = """
+        #
+        """
+        ship = Ship(ship_txt)
+        board.add_ship(ship)
+        board.randomize_map()
+        
+        ship_locations = Set(board.hidden_ships)
+
+        for _ in range(20):
+            r=randrange(board.rows)
+            c=randrange(board.cols)
+            points,message = board.fire(r,c)
+            if (r,c) in ship_locations:
+                self.assertEqual(points, 1)
+                ship_locations.remove((r,c))
+            else:
+                self.assertEqual(points, 0)
+        
+        print board.as_string()
         
         
         

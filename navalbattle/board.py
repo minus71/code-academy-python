@@ -89,9 +89,6 @@ class Board():
                 if i>1000:
                     # To prevent loops on unplaceble ships
                     warn('Could not set ship on board')
-                    break
-                if i>10:
-                    warn('Could not set ship on board')
                 delta_col=ship.cols-1
                 delta_row=ship.rows-1
                 off_row = randrange(self.rows-delta_row)
@@ -134,11 +131,11 @@ class Board():
                 return 1, "Hit!!!"
             else:
                 self.miss.add(coord)
-                return 0, "Hit!!!"
+                return 0, "Miss."
 
         
-            
-            
+    def avialable_targets(self):
+        return len(self.hidden_ships) - len(self.hit)
         
 
 
@@ -203,3 +200,71 @@ class Ship():
         return _list
                 
 
+class Game():
+    
+    CARRIER=Ship("####\n##")
+    CRUISER=Ship("###")
+    DESTROYER=Ship("##")
+    SUBMARINE=Ship("#")
+    
+    def __init__(self,players=2,turns=5,carriers=1,cruisers=3,destroyer=5,submarines=4,board_dimensions=(10,15)):
+        rows,cols=board_dimensions
+        self.board=Board(rows,cols)            
+        for _ in range(carriers):
+            self.board.add_ship(Game.CARRIER)
+        for _ in range(cruisers):
+            self.board.add_ship(Game.CRUISER)
+        for _ in range(destroyer):
+            self.board.add_ship(Game.DESTROYER)
+        for _ in range(submarines):
+            self.board.add_ship(Game.SUBMARINE)
+        self.scores={}
+        for n in range(players):
+            self.scores[n]=0
+        self.turns=turns
+        self.current_turn=0
+    
+    def play(self):
+        self.board.randomize_map()
+        for turn in range(self.turns):  
+            self.turn(turn)
+            if self.board.avialable_targets()==0:
+                break
+        print "Game Over"
+        max_score = 0
+        top_players=[] 
+        for p in self.scores:
+            score = self.scores[p]
+            if score>max_score:
+                top_players=[p]
+                max_score=score
+            if score == max_score:
+                top_players.append(p)
+        
+        if len(top_players)==1:
+            print "Player %d wins!" % (top_players[0])
+        else:
+            print "Game is a draw for the following players:"
+            for p in top_players:
+                print "Player %d" %(p)
+        
+        print self.board.as_string()
+        
+
+    def turn(self,turn):
+        for player in self.scores:
+            self.player_turn(player,turn)
+    
+    def player_turn(self,player,turn):
+        print "Turn %d for player %d" % (turn,player)
+        print "  current score: %d" %(self.scores[player])
+        self.board.print_board()
+        row = raw_input("Insert row coord:  ")
+        col= raw_input( "Insert colum coord:")
+        score,msg = self.board.fire(int(row), int(col))
+        self.scores[player]+=score
+        print msg
+        print "  current score: %d" %(self.scores[player])
+        self.board.print_board()
+        
+        
