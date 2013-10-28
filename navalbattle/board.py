@@ -151,7 +151,7 @@ class Board():
                 return 0, "Miss."
 
         
-    def avialable_targets(self):
+    def available_targets(self):
         return len(self.hidden_ships) - len(self.hit)
         
 
@@ -245,7 +245,7 @@ class Game():
         self.board.randomize_map()
         for turn in range(self.turns):  
             self.turn(turn)
-            if self.board.avialable_targets()==0:
+            if self.board.available_targets()==0:
                 break
         print "Game Over"
         max_score = 0
