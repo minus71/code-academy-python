@@ -10,6 +10,7 @@ from sets import Set
 from random import randrange
 
 
+
 class Test(unittest.TestCase):
 
 
@@ -186,6 +187,11 @@ class Test(unittest.TestCase):
         
         print board.as_string()
         
+    
+#     @patch('sys.stdout', new_callable=StringIO)
+#     def testPrint(self):
+#         board = Board()
+#         board.randomize_map()
         
         
 if __name__ == "__main__":

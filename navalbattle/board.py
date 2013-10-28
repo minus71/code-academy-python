@@ -36,8 +36,25 @@ class Board():
         return self.rows,self.cols
     
     def print_board(self):
-        print self.as_string(show_ship=False)
-
+        raw_string = self.as_string(show_ship=False)
+        str_buf_1 = MutableString()
+        str_buf_2 = MutableString()
+        str_buf_1.append("   ")
+        str_buf_2.append("   ")
+        for i in range(self.cols):
+            if i%10!=0 or i<10:
+                str_buf_1.append(' ')
+            else:
+                str_buf_1.append("%d"%(i/10))
+            str_buf_2.append(str(i%10))
+        print str_buf_1
+        print str_buf_2
+        
+        row_num=0
+        for row in raw_string.splitlines():
+            if len(row)>0:
+                print "%2d %s" %(row_num,row)
+                row_num+=1
 
     def fire_result(self, r, c):
         if r not in range(self.cols) or r not in range(self.rows):
